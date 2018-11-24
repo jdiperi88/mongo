@@ -1,10 +1,23 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/users_test");
-mongoose.connection
-	.once("open", () => {
-		console.log("good to go");
-	})
-	.on("error", error => {
-		console.warn("warning", error);
+mongoose.Promise = global.Promise;
+
+//runs code before the mocha library runs tests
+before(done => {
+	mongoose.connect("mongodb://localhost/users_test");
+	mongoose.connection
+		.once("open", () => {
+			console.log("good to go");
+			done();
+		})
+		.on("error", error => {
+			console.warn("warning", error);
+		});
+});
+
+beforeEach(done => {
+	mongoose.connection.collections.users.drop(() => {
+		//ready to run next test
+		done();
 	});
+});
