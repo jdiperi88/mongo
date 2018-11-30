@@ -24,6 +24,12 @@ UserSchema.virtual("postCount").get(function() {
 	return this.posts.length;
 });
 
+UserSchema.pre("remove", function(next) {
+	// this === to the model instance ...eg joe
+	const BlogPost = mongoose.model("blogPost");
+	BlogPost.remove({ _id: { $in: this.blogPosts } }).then(() => next());
+});
+
 // represents the ENTIRE COLLECTION not a single instance
 const User = mongoose.model("user", UserSchema);
 
