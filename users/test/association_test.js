@@ -43,11 +43,11 @@ describe("Associations", () => {
 				}
 			})
 			.then(user => {
-				console.log(user.blogPosts[0].comments[0].user.name);
+				console.log("test", user.blogPosts[0].comments[0].user);
 				assert(user.name === "joe");
 				assert(user.blogPosts[0].title === "cool");
 				assert(user.blogPosts[0].comments[0].content === "congrats!");
-				assert(user.blogPosts[0].comments[0].user === "joe");
+				assert(user.blogPosts[0].comments[0].user.name === "joe");
 				done();
 			});
 	});

@@ -3,7 +3,7 @@ const User = require("../src/User");
 
 describe("Deleting a User", () => {
 	let joe;
-	beforeEach(() => {
+	beforeEach(done => {
 		joe = new User({ name: "joe" });
 		joe.save().then(() => {
 			//has joe been saved successfully?
